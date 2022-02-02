@@ -37,12 +37,10 @@ export class MoviesComponent implements OnInit {
           this.movies = data[result as keyof Object];
           if (this.previous === null) {
             this.isdisabled = true;
-          }
+          }else this.isdisabled = false;
         }, 3000);
-        // console.log(data)
       },
       (err) => {
-      console.log(err)
       const url = "url"
       this.error_url = err[url as keyof Object]
       this.error = true;
@@ -64,11 +62,10 @@ export class MoviesComponent implements OnInit {
         this.movies = data[result as keyof Object];
         if (this.previous === null) {
           this.isdisabled = true;
-        }
+        }else this.isdisabled = false;
       }, 3000);
     },
     (err) => {
-      console.log(err)
       const url = "url"
       this.error_url = err[url as keyof Object]
       this.error = true;
@@ -89,11 +86,10 @@ export class MoviesComponent implements OnInit {
         this.movies = data[result as keyof Object];
         if (this.previous === 'null') {
           this.isdisabled = true;
-        }
+        }else this.isdisabled = false;
       }, 3000);
     },
     (err) => {
-      console.log(err)
       const url = "url"
       this.error_url = err[url as keyof Object]
       this.error = true;
@@ -101,24 +97,15 @@ export class MoviesComponent implements OnInit {
 
     }
     );
-    console.log(this.previous)
   }
 
   openModal(movie: any) {
     const modalRef = this.modalService.open(ModalComponent, {
       scrollable: true,
       windowClass: 'myCustomModalClass',
-      // keyboard: false,
-      // backdrop: 'static'
     });
 
     modalRef.componentInstance.fromParent = movie;
-    modalRef.result.then(
-      (result) => {
-        // console.log(result);
-      },
-      (reason) => {}
-    );
   }
 
   refresh(){
@@ -135,11 +122,10 @@ export class MoviesComponent implements OnInit {
         this.visible=false;
         if (this.previous === null) {
           this.isdisabled = true;
-        }
+        }else this.isdisabled = false;
       }, 3000);
     },
     (err) => {
-      console.log(err);
       const url = "url"
       this.error_url = err[url as keyof Object]
       this.error = true;

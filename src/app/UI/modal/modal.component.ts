@@ -14,7 +14,6 @@ export class ModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.fromParent);
   }
 
   closeModal(sendData: any) {

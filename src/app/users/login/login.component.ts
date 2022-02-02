@@ -6,7 +6,6 @@ import {
 } from '@angular/forms';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
-import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -43,11 +42,9 @@ export class LoginComponent implements OnInit {
         const field = "data"
         const token2 = "token"
         const token = (result[field as keyof Object][token2 as keyof Object]);
-        console.log(token)
         localStorage.setItem("token",JSON.stringify(token))
         this.router.navigate(['/movies'])
       }, err => {
-        console.log(err.error.error)
         this.logInError = true;
         if(err && err.error && err.error.error){
           this.logInErrorMessage = err.error.error.message;
@@ -58,7 +55,6 @@ export class LoginComponent implements OnInit {
     } else {
       for(const prop in this.loginForm.controls){
         this.loginButtonDisabled = false;
-        console.log( this.loginForm.get(prop))
         this.loginForm.get(prop)?.markAsDirty();
       }
     }
