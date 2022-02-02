@@ -21,4 +21,13 @@ export class LoginService {
     }) 
     return this.http.post(this.rootURL,payload,{headers});
   }
+
+  isLogin() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      return true;
+    }
+    return false;
+  }
 }

@@ -14,7 +14,7 @@
             <div class="col-md-4 offset-md-4">
                 <div class="login-form bg-light mt-4 p-4">
                     <form action="" method="" class="row g-3" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
-                        <h4>LOGIN IN</h4>
+                        <h4>LOGIN</h4>
                         <div class="col-12">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" placeholder="Username" required formControlName="username" ><br>
@@ -29,6 +29,7 @@
                                 <span>password is required</span>
                               </div>
                         </div>
+                        <div class="alert alert-danger" *ngIf="logInError">{{logInErrorMessage}}</div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-dark float-end" [disabled]="!loginForm.valid">Login</button>
                         </div>
