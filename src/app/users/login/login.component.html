@@ -30,7 +30,7 @@
                               </div>
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-dark float-end" [disabled]="loginButtonDisabled">Login</button>
+                            <button type="submit" class="btn btn-dark float-end" [disabled]="!loginForm.valid">Login</button>
                         </div>
                     </form>
                 </div>

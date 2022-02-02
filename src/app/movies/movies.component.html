@@ -1,51 +1,71 @@
 <app-navbar></app-navbar>
-<div *ngIf="visible; else loaded" class="loader">
+
+<div *ngIf="visible; else loader" class="loader">
   <div class="d-flex justify-content-center">
     <div class="spinner-border" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
 </div>
+<ng-template #loader>
+  <div *ngIf="error; else loaded">
+    <div class="center_btn">
+      <h3>ERROR OCCURRED</h3>
+      <button class="btn btn-primary" type="submit" (click)="refresh()">
+        refresh
+      </button>
+    </div>
+  </div>
+</ng-template>
+
 <ng-template #loaded>
-  
   <div class="container">
     <div class="input-group w-25 mx-auto mt-3">
-      <input type="text" class="form-control rounded" placeholder="Search" [(ngModel)]="searchedKeyword">
+      <input
+        type="text"
+        class="form-control rounded"
+        placeholder="Search"
+        [(ngModel)]="searchedKeyword"
+      />
     </div>
   </div>
   <div class="container">
-    <div class="row ">
+    <div class="row">
       <div
         class="col-md-6 col-lg-4 col-sm-12 col-12 layout-row"
-        *ngFor="let movie of movies | filter:searchedKeyword"
+        *ngFor="let movie of movies | filter: searchedKeyword"
       >
         <div
           class="card cards"
           style="width: 20rem; margin: 20px"
           (click)="openModal(movie)"
         >
-        <div class="text-center">
-          <img
-            class="card-img-top "
-            src="https://ui-avatars.com/api/?rounded=true&background=random"
-            alt="Card image cap"
-            style="height: 200px;width: 200px;padding-top: 30px"
-          />
-        </div>
+          <div class="text-center">
+            <img
+              class="card-img-top"
+              src="https://ui-avatars.com/api/?rounded=true&background=random"
+              alt="Card image cap"
+              style="height: 200px; width: 200px; padding-top: 30px"
+            />
+          </div>
           <div class="card-body">
-            <hr>
+            <hr />
             <h5 class="card-title text-center">{{ movie.title }}</h5>
-            <div *ngIf="movie.genres==''; else genres">
-              <br>
+            <div *ngIf="movie.genres == ''; else genres">
+              <br />
             </div>
             <ng-template #genres>
-              <h6  class="text-center" style="color: #909090;">{{movie.genres }}</h6>
-            </ng-template>   
-            <div class="card-text" style="text-align: justify;">
-              {{ movie.description | slice: 0:100}} {{movie.description.length > 100 ? '...' : ''}}</div>
+              <h6 class="text-center" style="color: #909090">
+                {{ movie.genres }}
+              </h6>
+            </ng-template>
+            <div class="card-text" style="text-align: justify">
+              {{ movie.description | slice: 0:100 }}
+              {{ movie.description.length > 100 ? "..." : "" }}
+            </div>
           </div>
         </div>
-      </div>   
+      </div>
     </div>
   </div>
 </ng-template>
@@ -54,10 +74,10 @@
   class="d-flex justify-content-center"
   [style.padding-top]="visible ? '80vh' : ''"
 >
-  <nav aria-label="Page navigation">
+  <nav aria-label="Page navigation" *ngIf="!error">
     <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" [attr.disabled]="isdisabled" (click)="Previous()"
+      <li class="page-item" [class.disabled] = "isdisabled">
+        <a class="page-link" (click)="Previous()"
           >Previous</a
         >
       </li>
@@ -66,7 +86,7 @@
   </nav>
 </div>
 
-<ng-template #content let-modal>
+<!-- <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title"></h4>
     <button
@@ -91,18 +111,4 @@
       close
     </button>
   </div>
-  <div class="d-flex justify-content-center">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" [attr.disabled]="isdisabled" (click)="Previous()"
-            >Previous</a
-          >
-        </li>
-        <li class="page-item">
-          <a class="page-link" (click)="Next()">Next</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</ng-template>
+</ng-template> -->

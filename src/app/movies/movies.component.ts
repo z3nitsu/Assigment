@@ -16,6 +16,7 @@ export class MoviesComponent implements OnInit {
   isdisabled: boolean = false;
   error: boolean = false;
   searchedKeyword: any;
+  error_url: string = ""
 
   constructor(
     public movieService: MovieService,
@@ -23,7 +24,8 @@ export class MoviesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.movieService.getMovies().subscribe(
+    const rootURL="https://demo.credy.in/api/v1/maya/movies/";
+    this.movieService.getMovies(rootURL).subscribe(
       (data) => {
         setTimeout(() => {
           this.visible = false;
@@ -33,27 +35,25 @@ export class MoviesComponent implements OnInit {
           this.next = data[nex as keyof Object];
           const result = 'results';
           this.movies = data[result as keyof Object];
+          if (this.previous === null) {
+            this.isdisabled = true;
+          }
         }, 3000);
         // console.log(data)
       },
       (err) => {
-        const http = 'HttpErrorResponse';
-        const status = 'status';
-
-        if(err[http as keyof Object][status as keyof Object] == '500'){
-          this.error = true
-        }
+      console.log(err)
+      const url = "url"
+      this.error_url = err[url as keyof Object]
+      this.error = true;
+      this.visible = false;
       }
     );
-
-    if (this.previous == 'null') {
-      this.isdisabled = true;
-    }
   }
 
   Next() {
     this.visible = true;
-    this.movieService.getMore(this.next).subscribe((data) => {
+    this.movieService.getMovies(this.next).subscribe((data) => {
       setTimeout(() => {
         this.visible = false;
         const prev = 'previous';
@@ -62,16 +62,23 @@ export class MoviesComponent implements OnInit {
         this.next = data[nex as keyof Object];
         const result = 'results';
         this.movies = data[result as keyof Object];
+        if (this.previous === null) {
+          this.isdisabled = true;
+        }
       }, 3000);
-    });
-    if (this.previous == 'null') {
-      this.isdisabled = true;
-    }
+    },
+    (err) => {
+      console.log(err)
+      const url = "url"
+      this.error_url = err[url as keyof Object]
+      this.error = true;
+      this.visible = false;
+    }    );
   }
 
   Previous() {
     this.visible = true;
-    this.movieService.getMore(this.previous).subscribe((data) => {
+    this.movieService.getMovies(this.previous).subscribe((data) => {
       setTimeout(() => {
         this.visible = false;
         const prev = 'previous';
@@ -80,11 +87,21 @@ export class MoviesComponent implements OnInit {
         this.next = data[nex as keyof Object];
         const result = 'results';
         this.movies = data[result as keyof Object];
+        if (this.previous === 'null') {
+          this.isdisabled = true;
+        }
       }, 3000);
-    });
-    if (this.previous == 'null') {
-      this.isdisabled = true;
+    },
+    (err) => {
+      console.log(err)
+      const url = "url"
+      this.error_url = err[url as keyof Object]
+      this.error = true;
+      this.visible = false;
+
     }
+    );
+    console.log(this.previous)
   }
 
   openModal(movie: any) {
@@ -101,6 +118,34 @@ export class MoviesComponent implements OnInit {
         // console.log(result);
       },
       (reason) => {}
+    );
+  }
+
+  refresh(){
+    this.movieService.getMovies(this.error_url).subscribe((data) => {
+      this.visible =true;
+      setTimeout(() => {
+        this.error = false;
+        const prev = 'previous';
+        this.previous = data[prev as keyof Object];
+        const nex = 'next';
+        this.next = data[nex as keyof Object];
+        const result = 'results';
+        this.movies = data[result as keyof Object];
+        this.visible=false;
+        if (this.previous === null) {
+          this.isdisabled = true;
+        }
+      }, 3000);
+    },
+    (err) => {
+      console.log(err);
+      const url = "url"
+      this.error_url = err[url as keyof Object]
+      this.error = true;
+      this.visible = false;
+
+    }
     );
   }
 }
