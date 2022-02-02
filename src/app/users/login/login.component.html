@@ -5,29 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">    
 </head>
 <body>
-
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand mx-auto" style="margin: 0; float: none; text-align:center" href="#">MOVIES
+       </a>
+    </nav>
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4">
                 <div class="login-form bg-light mt-4 p-4">
                     <form action="" method="" class="row g-3" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
-                        <h4>Welcome Back</h4>
+                        <h4>LOGIN IN</h4>
                         <div class="col-12">
                             <label>Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username" required formControlName="username"><br>
+                            <input type="text" name="username" class="form-control" placeholder="Username" required formControlName="username" ><br>
                               <div class="alert alert-danger" *ngIf="submitted && loginForm.controls.username.errors?.required" >
                                 <span>User name is required</span>
                               </div>
                         </div>
                         <div class="col-12">
                             <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" required formControlName="password"><br>
+                            <input type="password" name="password" class="form-control" placeholder="Password" required formControlName="password" ><br>
                             <div class="alert alert-danger" *ngIf="submitted && loginForm.controls.password.errors?.required" >
                                 <span>password is required</span>
                               </div>
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-dark float-end" >Login</button>
+                            <button type="submit" class="btn btn-dark float-end" [disabled]="loginButtonDisabled">Login</button>
                         </div>
                     </form>
                 </div>

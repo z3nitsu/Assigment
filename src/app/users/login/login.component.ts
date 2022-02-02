@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgModule } from '@angular/core';
 import {
   FormGroup,
   Validators,
   FormBuilder,
 } from '@angular/forms';
 import { LoginService } from 'src/app/shared/services/login.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   loginButtonDisabled: boolean = false;
 
-  constructor(public formBuilder: FormBuilder, public loginService: LoginService) {
+  constructor(public formBuilder: FormBuilder, public loginService: LoginService, public router: Router) {
     this.loginForm = formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -32,8 +33,11 @@ export class LoginComponent implements OnInit {
       this.loginButtonDisabled = false;
       this.loginService.getAuth(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value).subscribe(result => {
         const field = "data"
-        const token = (result[field as keyof Object]);
+        const token2 = "token"
+        const token = (result[field as keyof Object][token2 as keyof Object]);
+        console.log(token)
         localStorage.setItem("token",JSON.stringify(token))
+        this.router.navigate(['/movies'])
       }, err => {
         console.log(err)
       })

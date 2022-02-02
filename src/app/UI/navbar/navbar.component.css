@@ -1,0 +1,5 @@
+.btn:hover, .btn:focus, .btn:active, .btn.active {
+    color: rgb(231, 219, 219);
+    background-color: #e91313;
+    border-color: #eee7e7; /*set the color you want here*/
+}
