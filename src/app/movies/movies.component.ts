@@ -18,6 +18,8 @@ export class MoviesComponent implements OnInit {
   searchedKeyword: any;
   error_url: string = ""
 
+  logOutBtn: boolean = true;
+
   constructor(
     public movieService: MovieService,
     private modalService: NgbModal

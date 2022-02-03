@@ -6,6 +6,7 @@ import {
 } from '@angular/forms';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
+import { NavbarComponent } from 'src/app/UI/navbar/navbar.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +18,9 @@ export class LoginComponent implements OnInit {
   submitted = false;
   loginButtonDisabled: boolean = false;
   logInError: boolean = false;
-  logInErrorMessage: string = ''
+  logInErrorMessage: string = '';
+
+  logOutBtn: boolean = false;
 
   constructor(public formBuilder: FormBuilder, public loginService: LoginService, public router: Router) {
     this.loginForm = formBuilder.group({

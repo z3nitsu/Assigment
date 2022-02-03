@@ -1,6 +1,6 @@
 
-<nav class="navbar navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand mx-auto" style="margin: 0; float: none; padding-left: 75px;" href="#">MOVIES
+<nav class="navbar navbar-dark bg-dark sticky-top">
+      <a class="navbar-brand mx-auto" style="margin: 0; float: none;" [ngStyle]="{'padding-left': logOutBtn ? '75px' : ''}" href="#">MOVIES
      </a>
-      <button type="button" class="btn btn-outline-light" style="margin-right: 5px;" (click)="logout()">Log Out</button>
+      <button type="button" class="btn btn-outline-light" style="margin-right: 5px;" (click)="logout()" *ngIf="logOutBtn">Log Out</button>
   </nav>
