@@ -23,94 +23,8 @@ export class MoviesComponent implements OnInit {
     private modalService: NgbModal
   ) {}
 
-  ngOnInit(): void {
-    const rootURL="https://demo.credy.in/api/v1/maya/movies/";
-    this.movieService.getMovies(rootURL).subscribe(
-      (data) => {
-        setTimeout(() => {
-          this.visible = false;
-          const prev = 'previous';
-          this.previous = data[prev as keyof Object];
-          const nex = 'next';
-          this.next = data[nex as keyof Object];
-          const result = 'results';
-          this.movies = data[result as keyof Object];
-          if (this.previous === null) {
-            this.isdisabled = true;
-          }else this.isdisabled = false;
-        }, 3000);
-      },
-      (err) => {
-      const url = "url"
-      this.error_url = err[url as keyof Object]
-      this.error = true;
-      this.visible = false;
-      }
-    );
-  }
-
-  Next() {
-    this.visible = true;
-    this.movieService.getMovies(this.next).subscribe((data) => {
-      setTimeout(() => {
-        this.visible = false;
-        const prev = 'previous';
-        this.previous = data[prev as keyof Object];
-        const nex = 'next';
-        this.next = data[nex as keyof Object];
-        const result = 'results';
-        this.movies = data[result as keyof Object];
-        if (this.previous === null) {
-          this.isdisabled = true;
-        }else this.isdisabled = false;
-      }, 3000);
-    },
-    (err) => {
-      const url = "url"
-      this.error_url = err[url as keyof Object]
-      this.error = true;
-      this.visible = false;
-    }    );
-  }
-
-  Previous() {
-    this.visible = true;
-    this.movieService.getMovies(this.previous).subscribe((data) => {
-      setTimeout(() => {
-        this.visible = false;
-        const prev = 'previous';
-        this.previous = data[prev as keyof Object];
-        const nex = 'next';
-        this.next = data[nex as keyof Object];
-        const result = 'results';
-        this.movies = data[result as keyof Object];
-        if (this.previous === 'null') {
-          this.isdisabled = true;
-        }else this.isdisabled = false;
-      }, 3000);
-    },
-    (err) => {
-      const url = "url"
-      this.error_url = err[url as keyof Object]
-      this.error = true;
-      this.visible = false;
-
-    }
-    );
-  }
-
-  openModal(movie: any) {
-    const modalRef = this.modalService.open(ModalComponent, {
-      scrollable: true,
-      windowClass: 'myCustomModalClass',
-    });
-
-    modalRef.componentInstance.fromParent = movie;
-  }
-
-  refresh(){
-    this.movieService.getMovies(this.error_url).subscribe((data) => {
-      this.visible =true;
+  getData(url: string){
+    this.movieService.getMovies(url).subscribe((data) => {
       setTimeout(() => {
         this.error = false;
         const prev = 'previous';
@@ -133,5 +47,34 @@ export class MoviesComponent implements OnInit {
 
     }
     );
+  }
+
+  ngOnInit(): void {
+    const rootURL="https://demo.credy.in/api/v1/maya/movies/";
+    this.getData(rootURL)
+  }
+
+  Next() {
+    this.visible = true;
+    this.getData(this.next)
+  }
+
+  Previous() {
+    this.visible = true;
+    this.getData(this.previous)
+  }
+
+  openModal(movie: any) {
+    const modalRef = this.modalService.open(ModalComponent, {
+      scrollable: true,
+      windowClass: 'myCustomModalClass',
+    });
+
+    modalRef.componentInstance.fromParent = movie;
+  }
+
+  refresh(){
+    this.visible =true;
+    this.getData(this.error_url)
   }
 }
